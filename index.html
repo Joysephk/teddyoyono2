@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Franc Coin Calculator</title>
+  <style>
+    /* Styling for the page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: darkred;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Title -->
+    <h1>CFA Franc Coin Calculator</h1>
+    <!-- Form for user input -->
+    <div class="form-group">
+      <label for="amount">Enter amount in CFA Francs:</label>
+      <input type="number" id="amount" placeholder="Enter amount">
+    </div>
+    <!-- Button to trigger the calculation -->
+    <button onclick="calculateCoins()">Calculate</button>
+    <!-- Section to display the result -->
+    <div id="result"></div>
+    <!-- Section to display the number of each coin denomination -->
+    <div id="coins"></div>
+  </div>
+
+  <script>
+    // Function to calculate the number of each coin denomination
+    function calculateCoins() {
+      // Get the amount entered by the user
+      var amount = parseInt(document.getElementById("amount").value);
+      // Get the result and coins sections
+      var result = document.getElementById("result");
+      var coinsSection = document.getElementById("coins");
+      // Clear the previous results
+      result.innerHTML = "";
+      coinsSection.innerHTML = "";
+
+      // Define coin denominations
+      var denominations = [25,50,100, 500, 1000, 2000, 5000, 10000];
+      var coins = {};
+
+      // Calculate the number of each coin denomination
+      for (var i = denominations.length - 1; i >= 0; i--) {
+        var denomination = denominations[i];
+        coins[denomination] = Math.floor(amount / denomination);
+        amount %= denomination;
+      }
+
+      // Display the number of each coin denomination
+      for (var key in coins) {
+        if (coins.hasOwnProperty(key) && coins[key] > 0) {
+          var coin = coins[key];
+          // Display the number of coins for each denomination
+          if(key === '100'){
+            result.innerHTML += "<p>Number of " + key + " CFA Franc coins: " + coin + "</p>";
+          }
+          else{
+            coinsSection.innerHTML += "<p>Number of " + key + " CFA Franc coins: " + coin + "</p>";
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>
